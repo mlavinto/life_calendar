@@ -2,7 +2,7 @@ import argparse
 import cv2
 from datetime import datetime, timedelta, date
 import numpy as np
-
+import webcolors
 
 class Calendar():
     def __init__(self, 
@@ -90,11 +90,12 @@ if __name__ == '__main__':
     p.add_argument('--height', type=int, default=1080, help='Image height, pixels')
     p.add_argument('--startdate', type=str, default='1970-01-01', help='Calendar start, format YYYY-MM-DD')
     p.add_argument('--enddate', type=str, default='2070-01-01', help='Calendar end, format YYYY-MM-DD')
-    
+    p.add_argument('--basecolor', type=str, default='limegreen', help='Base color in CSS3 names. Should be relatively light.')
     args = p.parse_args()
     c = Calendar(resolution = (args.width, args.height), 
                  startdate = datetime.strptime(args.startdate, '%Y-%m-%d').date(), 
-                 enddate = datetime.strptime(args.enddate, '%Y-%m-%d').date())
+                 enddate = datetime.strptime(args.enddate, '%Y-%m-%d').date(),
+                 defcolor = list(reversed(webcolors.name_to_rgb(args.basecolor))))
     
     c.draw()
                     
